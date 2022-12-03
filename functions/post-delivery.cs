@@ -4,6 +4,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using OSRSEats.util;
 
 namespace OSRSEats.functions
 {
@@ -12,24 +13,19 @@ namespace OSRSEats.functions
         [FunctionName("post_delivery")]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
-            [CosmosDB(databaseName: "OSRSDeliveryServiceDB", containerName: "Active", 
-                Connection = "CosmosDbConnectionString")]
-                out object postDelivery,
+            [CosmosDB(databaseName: Constants.COSMOS_DB_Database_Name, 
+                containerName: Constants.COSMOS_DB_CONTAINER_NAME, 
+                Connection = Constants.COSMOS_DB_CONNECTION_STRING)]
+                out Delivery postDelivery,
             ILogger log)
         {
             log.LogInformation("post-delivery function processed a request.");
 
-            Guid id = Guid.NewGuid();
             string name = req.Query["name"];
             string location = req.Query["location"];
             string items = req.Query["items"];
 
-            postDelivery = new {
-                id,
-                name,
-                location,
-                items
-            };
+            postDelivery = new Delivery("trdy", location, items);
 
             return new OkObjectResult("ok");
         }
