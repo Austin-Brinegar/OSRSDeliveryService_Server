@@ -1,0 +1,1 @@
+Server side interactions for the OSRSEats plugin

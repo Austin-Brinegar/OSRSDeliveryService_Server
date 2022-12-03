@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "OSRSDeliveryService_Server": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7295",
+      "launchBrowser": false
+    }
+  }
+}
